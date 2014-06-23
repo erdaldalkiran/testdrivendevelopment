@@ -1,7 +1,7 @@
 ﻿using System;
 namespace Domain
 {
-    public abstract class Money
+    public class Money : IExpression
     {
         public Money(decimal amount, Currency currency)
         {
@@ -15,11 +15,11 @@ namespace Domain
 
         public override bool Equals(object obj)
         {
-            if (obj == null || obj.GetType() != this.GetType()) return false;
+            if (obj == null || this.GetType() != obj.GetType()) return false;
 
             var other = (Money)obj;
 
-            return this.Amount == other.Amount;
+            return this.Amount == other.Amount && this.Currency == other.Currency;
         }
 
         public override int GetHashCode()
@@ -29,14 +29,27 @@ namespace Domain
 
         public static Money Dollar(decimal amount)
         {
-            return new Dollar(amount, Currency.Dollar);
+            return new Money(amount, Currency.Dollar);
         }
 
         public static Money Franc(decimal amount)
         {
-            return new Franc(amount, Currency.Franc);
+            return new Money(amount, Currency.Franc);
         }
 
-        public abstract Money Times(int multiplier);
+        public Money Times(int multiplier)
+        {
+            return new Money(this.Amount * multiplier, this.Currency);
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0} {1}", this.Amount, this.Currency);
+        }
+
+        public IExpression Plus(Money money)
+        {
+            return new Money(this.Amount + money.Amount, this.Currency);
+        }
     }
 }

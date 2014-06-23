@@ -39,9 +39,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bank.cs" />
     <Compile Include="Currency.cs" />
-    <Compile Include="Dollar.cs" />
-    <Compile Include="Franc.cs" />
+    <Compile Include="IExpression.cs" />
     <Compile Include="Money.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
