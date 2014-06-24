@@ -10,7 +10,7 @@
         {
             var fiveDollar = Money.Dollar(5);
             var tenDollar = fiveDollar.Times(2);
-            Assert.AreEqual(10, tenDollar.Amount);
+            Assert.AreEqual(Money.Dollar(10), tenDollar);
         }
 
 

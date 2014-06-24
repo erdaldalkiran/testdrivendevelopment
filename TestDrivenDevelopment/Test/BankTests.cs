@@ -47,5 +47,17 @@
         }
 
 
+        [TestMethod]
+        public void Reduce_MixedAddition_ReducedCurrency()
+        {
+            IExpression fiveBucks = Money.Dollar(5);
+            IExpression tenFranc = Money.Franc(10);
+            var bank = new Bank();
+            bank.AddRate(Currency.Franc, Currency.Dollar, 2);
+            
+            var result = bank.Reduce(fiveBucks.Plus(tenFranc), Currency.Dollar);
+
+            Assert.AreEqual(Money.Dollar(10),result);
+        }
     }
 }

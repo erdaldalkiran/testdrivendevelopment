@@ -43,7 +43,7 @@ namespace Domain
             return new Money(amount, Currency.Franc);
         }
 
-        public Money Times(int multiplier)
+        public IExpression Times(int multiplier)
         {
             return new Money(this.Amount * multiplier, this.Currency);
         }
@@ -53,7 +53,7 @@ namespace Domain
             return string.Format("{0} {1}", this.Amount, this.Currency);
         }
 
-        public IExpression Plus(Money addend)
+        public IExpression Plus(IExpression addend)
         {
             return new Sum(this, addend);
         }
