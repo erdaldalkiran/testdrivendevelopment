@@ -27,6 +27,12 @@ namespace Domain
             return Convert.ToInt32(Math.Floor(Amount));
         }
 
+        public Money Reduce(Bank bank, Currency currency)
+        {
+            var rate = bank.Rate(this.Currency, currency);
+            return new Money(this.Amount / rate, currency);
+        }
+
         public static Money Dollar(decimal amount)
         {
             return new Money(amount, Currency.Dollar);
@@ -47,9 +53,9 @@ namespace Domain
             return string.Format("{0} {1}", this.Amount, this.Currency);
         }
 
-        public IExpression Plus(Money money)
+        public IExpression Plus(Money addend)
         {
-            return new Money(this.Amount + money.Amount, this.Currency);
+            return new Sum(this, addend);
         }
     }
 }

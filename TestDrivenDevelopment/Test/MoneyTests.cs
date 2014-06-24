@@ -27,13 +27,13 @@
         }
 
         [TestMethod]
-        public void Plus_Add5DollarsTo10Dollars_15Dollars()
+        public void Plus_Add5DollarsTo10Dollars_ReturnsSum()
         {
-            var sum = Money.Dollar(10).Plus(Money.Dollar(5));
-            Bank bank = new Bank();
-            Money reduced = bank.Reduce(sum, Currency.Dollar);
+            var result = Money.Dollar(10).Plus(Money.Dollar(5));
+            var sum = (Sum)result;
 
-            Assert.AreEqual(Money.Dollar(15), reduced);
+            Assert.AreEqual(Money.Dollar(10), sum.Augend);
+            Assert.AreEqual(Money.Dollar(5), sum.Addend);
         }
 
 
