@@ -3,30 +3,29 @@
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
-    public class MoneyTests
+    public class FrancTests
     {
 
         [TestMethod]
         public void Multiplication_MultiplyWith2_DoubledAmount()
         {
-            var fiveDollar = new Dollar(5);
-            
-            Assert.AreEqual(new Dollar(10), fiveDollar.Times(2));
-            Assert.AreEqual(new Dollar(5), fiveDollar);
+            Money fiveFranc = Money.Franc(5);
+
+            Assert.AreEqual(Money.Franc(10), fiveFranc.Times(2));
+            Assert.AreEqual(Money.Franc(5), fiveFranc);
         }
 
 
         [TestMethod]
         public void Equals_CompareWithSameAmount_MustBeEqual()
         {
-            Assert.AreEqual(new Dollar(5), new Dollar(5));
+            Assert.AreEqual(Money.Franc(5), Money.Franc(5));
         }
 
         [TestMethod]
         public void Equals_CompareWithDifferentAmount_NotEqual()
         {
-            Assert.AreNotEqual(new Dollar(5), new Dollar(6));
+            Assert.AreNotEqual(Money.Franc(5), Money.Franc(6));
         }
-
     }
 }
