@@ -1,12 +1,21 @@
 ﻿namespace Domain
 {
-    public abstract class Money
+    public class Money
     {
-        protected readonly decimal _amount;
+        protected readonly decimal Amount;
 
-        protected Money(decimal amount)
+        protected readonly Currency Currency;
+
+        public Money(decimal amount, Currency currency)
         {
-            _amount = amount;
+            Amount = amount;
+            Currency = currency;
+        }
+
+
+        public override int GetHashCode()
+        {
+            return Amount.GetHashCode();
         }
 
         public override bool Equals(object obj)
@@ -20,19 +29,28 @@
                 return true;
             }
 
-            return obj is Money && this.GetType() == obj.GetType() && _amount == (obj as Money)._amount;
+            return obj is Money && Currency == (obj as Money).Currency && Amount == (obj as Money).Amount;
         }
 
-        public static Dollar Dollar(decimal amount)
+        public static Money Dollar(decimal amount)
         {
-            return new Dollar(amount);
+            return new Money(amount, Currency.Dollar);
         }
 
-        public static Franc Franc(decimal amount)
+        public static Money Franc(decimal amount)
         {
-            return new Franc(amount);
+            return new Money(amount, Currency.Franc);
         }
 
-        public abstract Money Times(int multiplier);
+
+        public override string ToString()
+        {
+            return string.Format("{0} {1}", Amount, Currency);
+        }
+
+        public Money Times(int multiplier)
+        {
+            return new Money(Amount*multiplier, Currency);
+        }
     }
 }

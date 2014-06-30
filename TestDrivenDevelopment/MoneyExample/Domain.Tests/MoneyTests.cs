@@ -3,7 +3,7 @@
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
-    public class DollarTests
+    public class MoneyTests
     {
 
         [TestMethod]
