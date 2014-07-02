@@ -1,12 +1,12 @@
 ﻿namespace Domain
 {
-    public class Money
+    public class Money :IExpression
     {
-        protected readonly decimal Amount;
+        internal readonly decimal Amount;
 
         protected readonly Currency Currency;
 
-        public Money(decimal amount, Currency currency)
+        public Money(decimal amount, Currency currency) 
         {
             Amount = amount;
             Currency = currency;
@@ -16,6 +16,11 @@
         public override int GetHashCode()
         {
             return Amount.GetHashCode();
+        }
+
+        public Money Reduce(Currency currency)
+        {
+            return this;
         }
 
         public override bool Equals(object obj)
@@ -50,7 +55,12 @@
 
         public Money Times(int multiplier)
         {
-            return new Money(Amount*multiplier, Currency);
+            return new Money(Amount * multiplier, Currency);
+        }
+
+        public IExpression Plus(Money money)
+        {
+            return new Sum(this, money);
         }
     }
 }
