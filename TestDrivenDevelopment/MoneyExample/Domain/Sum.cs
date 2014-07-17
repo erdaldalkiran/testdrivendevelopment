@@ -2,19 +2,29 @@
 {
     public class Sum : IExpression
     {
-        public Sum(Money addend, Money augend)
+        public Sum( IExpression augend,IExpression addend)
         {
             Augend = augend;
             Addend = addend;
         }
 
-        public Money Augend { get; private set; }
-        public Money Addend { get; private set; }
+        public IExpression Augend { get; private set; }
+        public IExpression Addend { get; private set; }
 
-        public Money Reduce(Currency currency)
+        public Money Reduce(Bank bank, Currency to)
         {
-            var amount = Augend.Amount + Addend.Amount;
-            return new Money(amount, currency);
+            var amount = Augend.Reduce(bank, to).Amount + Addend.Reduce(bank, to).Amount;
+            return new Money(amount, to);
+        }
+
+        public IExpression Times(int multiplier)
+        {
+            return new Sum(Augend.Times(multiplier), Addend.Times(multiplier));
+        }
+
+        public IExpression Plus(IExpression addend)
+        {
+            return new Sum(this, addend);
         }
     }
 }

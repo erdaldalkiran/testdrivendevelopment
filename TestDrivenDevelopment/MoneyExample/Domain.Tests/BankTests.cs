@@ -27,6 +27,9 @@ namespace Domain.Tests
 
             Assert.AreEqual(Money.Dollar(1),result);
         }
+
+        
+        
         
     }
 }

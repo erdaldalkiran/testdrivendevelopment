@@ -37,7 +37,7 @@ namespace Domain.Tests
             Assert.AreNotEqual(Money.Dollar(5), Money.Franc(5));
         }
 
-        
+
         [TestMethod]
         public void Plus_Add5DolarsTo6Dolars_11Dolars()
         {
@@ -45,21 +45,34 @@ namespace Domain.Tests
             var bank = new Bank();
             var reduced = bank.Reduce(sum, Currency.Dollar);
 
-            Assert.AreEqual(Money.Dollar(11),reduced);
+            Assert.AreEqual(Money.Dollar(11), reduced);
         }
 
-        
+
         [TestMethod]
         public void Plus_ReturnsSum()
         {
             var fiveDollars = Money.Dollar(5);
             var result = fiveDollars.Plus(fiveDollars);
-            var sum = (Sum) result;
+            var sum = (Sum)result;
 
             Assert.AreEqual(Money.Dollar(5), sum.Augend);
-            Assert.AreEqual(Money.Dollar(5),sum.Addend);
+            Assert.AreEqual(Money.Dollar(5), sum.Addend);
         }
-        
-        
+
+        [TestMethod]
+        public void MixedAddition()
+        {
+            IExpression fiveDollars = Money.Dollar(5);
+            IExpression eightFrancs = Money.Franc(10);
+            var bank = new Bank();
+            bank.AddRate(Currency.Franc, Currency.Dollar, 2);
+
+            var reduced = bank.Reduce(fiveDollars.Plus(eightFrancs), Currency.Dollar);
+
+            Assert.AreEqual(Money.Dollar(10), reduced);
+        }
+
+
     }
 }

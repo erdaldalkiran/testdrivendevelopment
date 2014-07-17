@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Domain
 {
     public class Bank
     {
-        private Dictionary<Pair,decimal> _exchangeRates;
+        private readonly Dictionary<Pair,decimal> _exchangeRates = new Dictionary<Pair, decimal>();
 
         public Money Reduce(IExpression source, Currency currency)
         {
-            return source.Reduce(currency);
+            return source.Reduce(this,currency);
         }
 
         public void AddRate(Currency from, Currency to, decimal rate)
@@ -18,6 +19,15 @@ namespace Domain
             {
                 _exchangeRates.Add(pair, rate);
             }
+        }
+
+        public decimal GetRate(Currency from, Currency to)
+        {
+            if (from == to)
+            {
+                return 1;
+            }
+            return _exchangeRates[new Pair(from, to)];
         }
 
         public class Pair
